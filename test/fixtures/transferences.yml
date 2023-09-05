@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  value: 1.5
+  selected_date: 2023-09-05
+  hour: 1
+  origin_account: MyString
+  status: 1
+  target_account: MyString
+  type: 1
+  target_pix_key: MyString
+
+two:
+  value: 1.5
+  selected_date: 2023-09-05
+  hour: 1
+  origin_account: MyString
+  status: 1
+  target_account: MyString
+  type: 1
+  target_pix_key: MyString

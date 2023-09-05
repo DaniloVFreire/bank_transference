@@ -1,0 +1,2 @@
+class Transference < ApplicationRecord
+end
