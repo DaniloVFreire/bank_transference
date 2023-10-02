@@ -5,27 +5,28 @@ class AccountApiService
     API_URL = 'https://servicodados.ibge.gov.br/api/v2/censos/nomes'.freeze
 
     def self.check_balance(origin_account, value)
-
-      uri = URI(API_URL)
-      response = Net::HTTP.get_response(uri)
+      url = URI(API_URL)
+      request = Net::HTTP::Get.new(url.to_s)
+      response = Net::HTTP.start(url.host, url.port) {|http|
+        http.request(request)
+      }
 
       if response.is_a?(Net::HTTPSuccess)
-       #data = JSON.parse(response.body)
+        data = JSON.parse(response.body)
+      else
+        return 'falha ao acessar api de conta'
         data = {
           balance: 100.50
         }
-
-        balance = data['balance']
+      end
+      balance = data['balance'].to_f
+      puts "balance: " + balance.to_s
+      
 
         if balance >= value
           return true 
         else
           return false
         end
-
-      else
-        return 'falha ao acessar api de conta'
-      end
     end
-
 end 
