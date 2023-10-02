@@ -1,3 +1,4 @@
+require 'date';
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
@@ -7,7 +8,5 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 
-Transferences.create!(first_name: 'Sam', last_name: 'Thomas', genre: 'rock')
-Transferences.create!(first_name: 'Sarah', last_name: 'Jones', genre: 'pop')
-Transferences.create!(first_name: 'Joe', last_name: 'Smith', genre: 'country')
-Transferences.create!(first_name: 'Jen', last_name: 'Adams', genre: 'folk')
+Transference.create!(value: 100.0, origin_account: '1234567890', target_account_Or_pix_key: '0987654321', type:1, created_at: Datetime.now, updated_at: Datetime.now)
+Transference.create!(value: 150.0, origin_account: '0987654321', target_account_Or_pix_key: '1234567890',type:2 , created_at: Datetime.now, updated_at: Datetime.now)
