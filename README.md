@@ -18,6 +18,7 @@ BANK_TRANSFERENCE_DATABASE_USERNAME=yourUser
 ```
 Run the following commands
 ```bash
+$ gem install rails
 $ gem install bundler
 $ cd bank_transference #Assert that you are on the root project folder
 $ bundle init #Create the gem environment

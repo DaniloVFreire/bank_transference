@@ -6,7 +6,7 @@ class CreateTransferences < ActiveRecord::Migration[7.0]
       t.integer :hour
       t.string :origin_account, null: false
       t.integer :status
-      t.string :target_account_Or_pix_key, null:false
+      t.string :target_account_or_pix_key, null:false
       t.integer :transference_type, null:false
 
       t.timestamps

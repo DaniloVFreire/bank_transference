@@ -3,7 +3,8 @@ require 'json'
 
 class AccountApiService
     API_URL = 'http://numbersapi.com/100?json'.freeze
-
+    # Check with middle-end if the origin account have the value
+    # return 0: no error, 1: not enough money the origin account, 2: server communication error
     def self.check_balance(origin_account, value)
       url = URI(API_URL)
       request = Net::HTTP::Get.new(url.to_s)

@@ -20,7 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_05_152814) do
     t.integer "hour"
     t.string "origin_account", null: false
     t.integer "status"
-    t.string "target_account_Or_pix_key", null: false
+    t.string "target_account_or_pix_key", null: false
     t.integer "transference_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
