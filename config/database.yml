@@ -18,8 +18,8 @@ default: &default
   adapter: postgresql
   encoding: UTF-8
   database: bank_transference
-  username: postgres
-  password: 205050
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   host: localhost
   port: 5432
   # For details on connection pooling, see Rails configuration guide
@@ -28,7 +28,6 @@ default: &default
 
 development:
   <<: *default
-
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
@@ -84,4 +83,4 @@ test:
 #
 production:
   <<: *default
-  password: <%= ENV["BANK_TRANSFERENCE_DATABASE_PASSWORD"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>

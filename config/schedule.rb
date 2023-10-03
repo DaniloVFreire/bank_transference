@@ -17,8 +17,12 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 
-every 1.minutes do
-  runner "transference.doScheduledTransferences"
-end
+# every 1.minutes do
+#   runner "transference.doScheduledTransferences"
+# end
+
+# every 1.minutes do
+#   runner "aply_scheduled_transferences_job.perform_timed"
+# end
 
 # Learn more: http://github.com/javan/whenever

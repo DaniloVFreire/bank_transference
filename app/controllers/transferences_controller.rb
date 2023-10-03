@@ -9,7 +9,8 @@ class TransferencesController < ApplicationController
     render json:@transference
   end
   def show_all_transferences
-    @transference = Transference.where(origin_account: params[:account_or_pix_key]).or(Transference.where(target_account_or_pix_key: params[:account_or_pix_key]))
+    @transference = Transference.where(origin_account: params[:account_or_pix_key]).
+      or(Transference.where(target_account_or_pix_key: params[:account_or_pix_key]))
     render json:@transference
   end
   def show_made_transferences
@@ -29,9 +30,9 @@ class TransferencesController < ApplicationController
     transference_type = transfer_data['transference_type']
 
     #@target_account_exist = AccountApiService.check_target_account(target_account)
-    have_ballance_to_transfer = AccountApiService.check_balance(origin_account, value)
+    have_balance_to_transfer = AccountApiService.check_balance(origin_account, value)
 
-    if have_ballance_to_transfer == 0
+    if have_balance_to_transfer == 0
       if transference_type == 1
         creation_result = Transference.create_transference_from_hash(input_transference: transfer_data)
         render json: { message: creation_result }
@@ -42,7 +43,7 @@ class TransferencesController < ApplicationController
       else
         render json: { error: 'Tipo de transferência não suportada' }, status: :unprocessable_entity
       end
-    elsif have_ballance_to_transfer == 2
+    elsif have_balance_to_transfer == 2
       render json: { error: 'falha ao acessar api de conta' }, status: :not_found
     else 
       render json: { error: 'Saldo insuficiente para realizar a transferência' }, status: :unprocessable_entity
@@ -50,8 +51,6 @@ class TransferencesController < ApplicationController
   end
   def destroy
     @transference.destroy
-    # element_id = JSON.parse(request.body.read['id'])
-    # render json: Transference.destroy(id: element_id)
   end
   private
     def set_transference

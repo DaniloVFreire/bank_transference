@@ -21,8 +21,8 @@ Run the following commands
 $ gem install rails
 $ gem install bundler
 $ cd bank_transference #Assert that you are on the root project folder
-$ bundle init #Create the gem environment
-$ bundle install #Install the dependencies
+$ bundler init #Create the gem environment
+$ bundler install #Install the dependencies
 $ rails db:create db:migrate db:seed #Creating the database and seeding it
 $ rails s #Run the application
 ```
