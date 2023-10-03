@@ -13,7 +13,10 @@ class TransferencesController < ApplicationController
 
     if can_transfer == 0
       if transference_type == 1
+        @transference = Transference.new(transfer_data)
+        @transference.save
         render json: { message: 'Transferência por PIX realizada com sucesso' }
+        
       elsif transference_type == 2
         render json: { message: 'Transferência por TED realizada com sucesso, o valor será enviado em no mínimo uma hora' }
       elsif transference_type == 3
@@ -26,5 +29,8 @@ class TransferencesController < ApplicationController
     else 
       render json: { error: 'Saldo insuficiente para realizar a transferência' }, status: :unprocessable_entity
     end
+  end
+  def index
+    render json: Transference.all
   end
 end

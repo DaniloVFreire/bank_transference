@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   # Option 3 - Define specific controller action
   #get '/transferences', to: 'transferences#index'
 
-  post '/transferences', to: 'transferences#create' 
+  #post '/transferences', to: 'transferences#create' 
+  resources :transferences, only: [:index, :create]
 end
