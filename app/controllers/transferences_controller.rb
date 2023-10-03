@@ -1,7 +1,7 @@
 class TransferencesController < ApplicationController
 
   def create
-    puts "algo"
+    puts "create with post route"
     transfer_data = JSON.parse(request.body.read)
     origin_account = transfer_data['origin_account']
     target_account = transfer_data['target_account']
@@ -11,7 +11,7 @@ class TransferencesController < ApplicationController
     #@target_account_exist = AccountApiService.check_target_account(target_account)
     can_transfer = AccountApiService.check_balance(origin_account, value)
 
-    if can_transfer
+    if can_transfer == 0
       if transference_type == 1
         render json: { message: 'Transferência por PIX realizada com sucesso' }
       elsif transference_type == 2
@@ -21,6 +21,8 @@ class TransferencesController < ApplicationController
       else
         render json: { error: 'Tipo de transferência não suportada' }, status: :unprocessable_entity
       end
+    elsif can_transfer == 2
+      render json: { error: 'falha ao acessar api de conta' }, status: :not_found
     else 
       render json: { error: 'Saldo insuficiente para realizar a transferência' }, status: :unprocessable_entity
     end

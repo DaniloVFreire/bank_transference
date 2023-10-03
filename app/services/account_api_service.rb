@@ -2,31 +2,38 @@ require 'net/http'
 require 'json'
 
 class AccountApiService
-    API_URL = 'https://servicodados.ibge.gov.br/api/v2/censos/nomes'.freeze
+    API_URL = 'http://numbersapi.com/100?json'.freeze
 
     def self.check_balance(origin_account, value)
       url = URI(API_URL)
       request = Net::HTTP::Get.new(url.to_s)
-      response = Net::HTTP.start(url.host, url.port) {|http|
+      response = Net::HTTP.start(url.host) {|http|
         http.request(request)
       }
-
+      puts "---------------------------------------------------------------------------------------------------------------------------"
+      puts response
+      puts "---------------------------------------------------------------------------------------------------------------------------"
       if response.is_a?(Net::HTTPSuccess)
-        data = JSON.parse(response.body)
-      else
-        return 'falha ao acessar api de conta'
+        body = JSON.parse(response.body)
         data = {
-          balance: 100.50
+          "balance" => body["number"]
         }
+        puts "Info from api"
+        puts "balance: " + data["balance"].to_s
+      else
+        return 2
       end
-      balance = data['balance'].to_f
+      data = {
+        "balance" => 100.50
+      }
+      balance = data["balance"].to_f
       puts "balance: " + balance.to_s
       
 
         if balance >= value
-          return true 
+          return 0 
         else
-          return false
+          return 1
         end
     end
 end 
