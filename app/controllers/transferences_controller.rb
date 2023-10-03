@@ -30,21 +30,25 @@ class TransferencesController < ApplicationController
     transference_type = transfer_data['transference_type']
 
     #@target_account_exist = AccountApiService.check_target_account(target_account)
-    have_balance_to_transfer = AccountApiService.check_balance(origin_account, value)
+    have_balance_to_transfer = MiddleEndCommunicationService.check_balance(origin_account, value)
 
     if have_balance_to_transfer == 0
       if transference_type == 1
-        creation_result = Transference.create_transference_from_hash(input_transference: transfer_data)
+        creation_result = Transference.create_PIX_transference_from_hash(input_transference: transfer_data)
         render json: { message: creation_result }
       elsif transference_type == 2
-        render json: { message: 'Transferência por TED realizada com sucesso, o valor será enviado em no mínimo uma hora' }
+        creation_result = Transference.create_TED_transference_from_hash(input_transference: transfer_data)
+        render json: { message: creation_result }
+        #'Transferência por TED realizada com sucesso, o valor será enviado em no mínimo uma hora'
       elsif transference_type == 3
-        render json: { message: 'Transferência por DOC iniciada, o valor será enviado no próximo dia útil' }
+        creation_result = Transference.create_DOC_transference_from_hash(input_transference: transfer_data)
+        render json: { message: creation_result }
+        #'Transferência por DOC iniciada, o valor será enviado no próximo dia útil'
       else
         render json: { error: 'Tipo de transferência não suportada' }, status: :unprocessable_entity
       end
     elsif have_balance_to_transfer == 2
-      render json: { error: 'falha ao acessar api de conta' }, status: :not_found
+      render json: { error: 'falha ao acessar o middle-end' }, status: :not_found
     else 
       render json: { error: 'Saldo insuficiente para realizar a transferência' }, status: :unprocessable_entity
     end

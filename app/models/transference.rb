@@ -6,34 +6,43 @@ class Transference < ApplicationRecord
       errors.append('Valor da transferência faltando')
     end
     if input_transference["origin_account"] == nil
-      return 'Conta de origem da transferência faltando'
+      errors.append('Dados de conta de origem da transferencia faltando')
     end
     if input_transference["target_account_or_pix_key"] == nil
-      return 'Chave pix da conta recebedora faltando'
+      if input_transference["transference_type"] == 1
+        return 'Chave pix da conta recebedora faltando'
+      elsif input_transference["transference_type"] == 2 or input_transference["transference_type"] == 3
+        return 'Dados de conta de recebimento faltando'
+        end
     end
-    puts Date.today.iso8601.to_s
-
     if errors.empty?
       return nil
     end
   end
-  def self.create_transference_from_hash(input_transference:hash)
+  # @param [Integer] input_transference, the transference data
+  # @return [String]
+  def self.create_PIX_transference_from_hash(input_transference:hash)
     @db_transaction_version = input_transference.clone
-    errors = self.verify_errors_fields(input_transference: input_transference)
-    if errors != nil
-      return errors
+    missing_info_errors = self.verify_errors_fields(input_transference: input_transference)
+    message = ''
+    if missing_info_errors != nil
+      return missing_info_errors
     else
       if self.transaction_is_for_now(input_transference:input_transference)
         @db_transaction_version["status"] = 0
-        AccountApiService.send_transference(input_transference:input_transference)
-        return 'Transferência por PIX enviada com sucesso'
+        MiddleEndCommunicationService.send_value_to_target_account(input_transference:input_transference)
+        message =  'Transferência por PIX enviada com sucesso'
       else
         @db_transaction_version["status"] = 1
-        return 'Transferência por PIX agendada com sucesso'
+        message = 'Transferência por PIX agendada com sucesso'
       end
-
-      @transference = Transference.new(@db_transaction_version)
-      @transference.save
+      begin
+        @transference = Transference.new(@db_transaction_version)
+        @transference.save
+      rescue
+        message = 'Ocorreu um erro no salvamento do dado'
+      end
+      return message
     end
   end
 
