@@ -1,24 +1,27 @@
-# README
+# Bank transference microservice API for CLP subject
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## language, frameworks and tools versions:
+- Ruby: version 3.2.2
+- Ruby on Rails: Version 7.0.7.2
+- Postgresql: version 15.3
+- Required gems(Ruby libraries):
+  - bundler(to install the gemfile): version 2.4.10
+  - All other required gems are on the **Gemfile**  
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## How to run:
+install the desired ruby version installer or version manager from [ruby install documentation](https://www.ruby-lang.org/pt/documentation/installation/)  
+Install PostgresSQL from [PostgreSQL Downloads](https://www.postgresql.org/download/)  
+Create a file .env file on the bank_transference folder with your database credentials:
+```
+BANK_TRANSFERENCE_DATABASE_PASSWORD=yourPassword
+BANK_TRANSFERENCE_DATABASE_USERNAME=yourUser
+```
+Run the following commands
+```bash
+$ gem install bundler
+$ cd bank_transference #Assert that you are on the root project folder
+$ bundle init #Create the gem environment
+$ bundle install #Install the dependencies
+$ rails db:create db:migrate db:seed #Creating the database and seeding it
+$ rails s #Run the application
+```

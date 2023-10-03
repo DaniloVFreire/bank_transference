@@ -16,7 +16,6 @@ class TransferencesController < ApplicationController
         @transference = Transference.new(transfer_data)
         @transference.save
         render json: { message: 'Transferência por PIX realizada com sucesso' }
-        
       elsif transference_type == 2
         render json: { message: 'Transferência por TED realizada com sucesso, o valor será enviado em no mínimo uma hora' }
       elsif transference_type == 3

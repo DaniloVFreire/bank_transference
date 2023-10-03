@@ -8,4 +8,5 @@ Rails.application.routes.draw do
 
   #post '/transferences', to: 'transferences#create' 
   resources :transferences, only: [:index, :create]
+
 end
