@@ -26,3 +26,5 @@ $ bundler install #Install the dependencies
 $ rails db:create db:migrate db:seed #Creating the database and seeding it
 $ rails s #Run the application
 ```
+## Documentation
+[Documentation file in pdf]()

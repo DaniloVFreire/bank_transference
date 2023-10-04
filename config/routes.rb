@@ -11,5 +11,5 @@ Rails.application.routes.draw do
 
   get "/transferences/made/:origin_account", to: "transferences#show_made_transferences"
   get "/transferences/all/:account_or_pix_key", to: "transferences#show_all_transferences"
-  get "/transferences/recived/:account_or_pix_key", to: "transferences#show_recived_transferences"
+  get "/transferences/received/:account_or_pix_key", to: "transferences#show_recived_transferences"
 end

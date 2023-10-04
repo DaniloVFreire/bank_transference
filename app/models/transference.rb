@@ -1,4 +1,5 @@
 require 'date'
+require 'time'
 class Transference < ApplicationRecord
   def self.verify_errors_fields(input_transference:hash)
     errors = []
@@ -55,6 +56,13 @@ class Transference < ApplicationRecord
       return false
     end
   end
+    def self.is_business_day(date)
+      if Date.parse(date).wday == 0 or Date.parse(date).wday == 7
+        return false
+      else
+        return true
+      end
+    end
 
   def get_scheduled_transferences
     self.where()
