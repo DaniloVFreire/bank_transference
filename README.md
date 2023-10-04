@@ -27,4 +27,4 @@ $ rails db:create db:migrate db:seed #Creating the database and seeding it
 $ rails s #Run the application
 ```
 ## Documentation
-[Documentation file in pdf]()
+[Documentation file in pdf](https://github.com/DaniloVFreire/bank_transference/blob/master/Documentation/documentation_transference_api_ruby_on_rails.pdf)
