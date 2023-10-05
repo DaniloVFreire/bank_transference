@@ -15,6 +15,7 @@ Create a file .env file on the bank_transference folder with your database crede
 ```
 BANK_TRANSFERENCE_DATABASE_PASSWORD=yourPassword
 BANK_TRANSFERENCE_DATABASE_USERNAME=yourUser
+MIDDLE_END_BASE_URL=urlToMiddleEndApi
 ```
 Run the following commands
 ```bash
