@@ -32,13 +32,13 @@ class Transference < ApplicationRecord
       if self.transaction_is_for_now(input_transference:input_transference)
         @db_transaction_version["status"] = 0
         begin
-          MiddleEndCommunicationService.remove_value_from_sender_account(input_transference:input_transference)
+          AccountApiService.remove_value_from_sender_account(input_transference:input_transference)
         rescue
           return 'Transferência por PIX, não efetuada por problemas de conexão, tente novamente mais tarde'
         end
 
         begin
-          MiddleEndCommunicationService.send_value_to_target_account(input_transference:input_transference)
+          AccountApiService.send_value_to_target_account(input_transference:input_transference)
         rescue
           return 'Transferência por PIX, não efetuada por problemas de conexão, tente novamente mais tarde'
         end
