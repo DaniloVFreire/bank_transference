@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   #get '/transferences', to: 'transferences#index'
 
   #post '/transferences', to: 'transferences#create' 
-  resources :transferences, only: [:index, :create, :destroy, :show]
+  resources :transferences, only: [:index, :create, :show]
 
   get "/transferences/made/:origin_account", to: "transferences#show_made_transferences"
   get "/transferences/all/:account_or_pix_key", to: "transferences#show_all_transferences"

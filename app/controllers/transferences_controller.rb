@@ -1,5 +1,5 @@
 class TransferencesController < ApplicationController
-  before_action :set_transference, only: %i[ update destroy]
+  before_action :set_transference, only: %i[ update destroy ]
   def index
     @transferences = Transference.all
     render json: @transferences
@@ -25,25 +25,24 @@ class TransferencesController < ApplicationController
     puts "create with post route"
     transfer_data = JSON.parse(request.body.read)
     origin_account = transfer_data['origin_account']
-    target_account = transfer_data['target_account']
+    #target_account = transfer_data['target_account']
     value = transfer_data['value'].to_f
     transference_type = transfer_data['transference_type']
-
-    #@target_account_exist = AccountApiService.check_target_account(target_account)
-    have_balance_to_transfer = MiddleEndCommunicationService.check_balance(origin_account, value)
+    puts "sending the request"
+    have_balance_to_transfer = AccountApiService.check_balance(origin_account, value)
 
     if have_balance_to_transfer == 0
+      puts "have balance"
       if transference_type == 1
+        puts "selected pix transference"
         creation_result = Transference.create_PIX_transference_from_hash(input_transference: transfer_data)
         render json: { message: creation_result }
       elsif transference_type == 2
         creation_result = Transference.create_TED_transference_from_hash(input_transference: transfer_data)
         render json: { message: creation_result }
-        #'Transferência por TED realizada com sucesso, o valor será enviado em no mínimo uma hora'
       elsif transference_type == 3
         creation_result = Transference.create_DOC_transference_from_hash(input_transference: transfer_data)
         render json: { message: creation_result }
-        #'Transferência por DOC iniciada, o valor será enviado no próximo dia útil'
       else
         render json: { error: 'Tipo de transferência não suportada' }, status: :unprocessable_entity
       end
@@ -60,7 +59,7 @@ class TransferencesController < ApplicationController
     def set_transference
       @transference = Transference.find(params[:id])
     end
-    def transference_params
-      params.require(:transference).permit(:value, :selected_date, :hour, :origin_account, :status, :target_account_or_pix_key, :transference_type)
-    end
+    # def transference_params
+    #   params.require(:transference).permit(:value, :selected_date, :hour, :origin_account, :status, :target_account_or_pix_key, :transference_type)
+    # end
 end
